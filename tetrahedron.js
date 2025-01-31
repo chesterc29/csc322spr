@@ -1,35 +1,46 @@
-// import THREE
+// Import THREE
 import * as THREE from 'https://threejsfundamentals.org/threejs/resources/threejs/r132/build/three.module.js';
-// import Orbit controls
+// Import OrbitControls
 import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js';
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
+// Set up the scene, camera, and renderer
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.z = 40;
 
-const camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500 );
-camera.position.set( 0, 0, 100 );
-camera.lookAt( 0, 0, 0 );
+var renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-const scene = new THREE.Scene();
+const material = new THREE.LineBasicMaterial({ color: 0x0000ff });
+const points = [
+   new THREE.Vector3(-20, 0, 0),
+  new THREE.Vector3(0, 20, 12),
+  new THREE.Vector3(20, 0, 0),
+  new THREE.Vector3(-20, 0, 0),
+  new THREE.Vector3(0, 0, 15),
+  new THREE.Vector3(20, 0, 0),
+  new THREE.Vector3(0, 20, 12),
+   new THREE.Vector3(0, 0, 15),
+];
+const geometry = new THREE.BufferGeometry().setFromPoints(points);
 
-//create a blue LineBasicMaterial
-const material = new THREE.LineBasicMaterial( { color: 0x0000ff } );
+const line = new THREE.Line(geometry, material);
+scene.add(line);
 
-const points = [];
-points.push( new THREE.Vector3( - 20, 0, 0 ) );  
-points.push( new THREE.Vector3( 0, 30, 0 ) );    
-points.push( new THREE.Vector3( 20, 0, 0 ) );    
-points.push( new THREE.Vector3( - 20, 0, 0 ) );  
-points.push( new THREE.Vector3( 0, -20, 20 ) );   
-points.push( new THREE.Vector3( 20, 0, 0 ) );    
-points.push( new THREE.Vector3( 0, -20, 20 ) ); 
-points.push( new THREE.Vector3( 0, 30, 0 ) );
+// Add directional light for better visualization
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(1, 1, 1);
+scene.add(directionalLight);
 
-const geometry = new THREE.BufferGeometry().setFromPoints( points );
+// Set up animation
+var animate = function () {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+};
 
+// Set up OrbitControls for camera interaction
+var controls = new OrbitControls(camera, renderer.domElement);
 
-const line = new THREE.Line( geometry, material );
-
-scene.add( line );
-renderer.render( scene, camera );
+// Start the animation
+animate();
