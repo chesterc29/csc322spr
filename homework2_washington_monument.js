@@ -118,10 +118,10 @@ scene.add( mesh5 );
 //SKYBLUE Rectangle side Top triangle
 const material6 = new THREE.MeshBasicMaterial( {color: 'skyblue'} );
 const points6 = [
-	new THREE.Vector3(-17.5, 0, -17.5),
-  new THREE.Vector3(-17.5, -500, 17.5),
+	new THREE.Vector3(-17.5, -500, 17.5),
   new THREE.Vector3(-17.5, 0, 17.5),
-  new THREE.Vector3(17.5, 0, -17.5)
+  new THREE.Vector3(-17.5, 0, -17.5),
+  new THREE.Vector3(17.5, -500, -17.5)
 ];
 const geometry6 = new THREE.BufferGeometry().setFromPoints(points6);
 
